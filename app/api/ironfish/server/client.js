@@ -22,6 +22,15 @@ export class IronFishRpcClient {
     return accounts;
   }
 
+  async getViewKey(account) {
+    const { account: key } = await this.request('wallet/exportAccount', {
+      account,
+      viewOnly: true,
+      format: 'Bech32',
+    });
+    return key;
+  }
+
   async getPublicKey(account) {
     const { publicKey } = await this.request('wallet/getPublicKey', {
       account,

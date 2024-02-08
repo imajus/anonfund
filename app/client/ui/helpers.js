@@ -12,5 +12,7 @@ Template.helpers({
     }
     return '';
   },
+  'formatAmount': (amount) => amount / 10 ** 8,
+  'formatDate': (date) => new Date(date).toLocaleDateString(),
   'Settings': () => Meteor.settings.public,
 });

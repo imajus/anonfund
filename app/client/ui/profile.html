@@ -1,3 +1,22 @@
 <template name="Profile">
-  {{>pageHeader heading='My Profile'}}
+  {{>pageHeader heading='Donations'}}
+  {{#each donations}}
+    <div class="mb-3">
+      {{#card title=campaign.name}}
+        <ul class="list-unstyled">
+          <li><strong>Amount:</strong> {{formatAmount transfer.amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+          <li><strong>Created:</strong> {{transfer.createdAt.toLocaleString}}</li>
+          <li><strong>Completed:</strong>
+            {{when transfer.completedAt yes=transfer.completedAt.toLocaleString no='No'}}
+          </li>
+        </ul>
+        <div class="form-group">
+          <label>View-Only Key:</label>
+          <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
+        </div>
+      {{/card}}
+    </div>
+  {{else}}
+    <div class="text-muted">No donations done yet.</div>
+  {{/each}}
 </template>
