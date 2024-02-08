@@ -35,7 +35,7 @@ TemplateController('CampaignFunding', {
       const user = Meteor.user();
       const campaign = this.campaign();
       const amount = form['amount'].value * 10 ** 8;
-      this.state.status = `Depositing ${tokenSymbol} to IronFish network...`;
+      this.state.status = `Please confirm depositing ${tokenSymbol}...`;
       try {
         const tx = await TokenContract.transferWithMetadata(
           Meteor.settings.public.Ethereum.depositAddress,
@@ -56,6 +56,7 @@ TemplateController('CampaignFunding', {
         this.state.status = 'Updating balance...';
         await this.updateBalance();
         this.state.status = null;
+        form.reset();
         alert('OK');
       } catch (err) {
         this.state.status = err;
