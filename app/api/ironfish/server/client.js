@@ -8,7 +8,10 @@ export class IronFishRpcClient {
   }
 
   async createAccount(name) {
-    return this.request('wallet/createAccount', { name });
+    const { publicAddress } = await this.request('wallet/createAccount', {
+      name,
+    });
+    return publicAddress;
   }
 
   async getAccounts() {

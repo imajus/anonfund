@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import '/init';
 import './polyfills';
 import './api';
+import './users';
 import { IronFish } from '/api/ironfish/server';
 
 Meteor.startup(async () => {
