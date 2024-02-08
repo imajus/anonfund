@@ -8,6 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug: Node",
+      "cwd": "${workspaceFolder}/app",
       "runtimeExecutable": "meteor",
       "runtimeArgs": [
         "--settings=settings.json",
@@ -15,7 +16,7 @@
         "--raw-logs"
       ],
       "env": {
-        "ROOT_URL": "http://localhost:3000",
+        "ROOT_URL": "http://localhost:3000"
       },
       "outputCapture": "std",
       "restart": true,
@@ -26,7 +27,7 @@
       "request": "launch",
       "name": "Debug: Browser",
       "sourceMapPathOverrides": {
-        "meteor://💻app/*": "${workspaceFolder}/*"
+        "meteor://💻app/*": "${workspaceFolder}/app/*"
       },
       "url": "http://localhost:3000",
       "userDataDir": "${env:HOME}/.vscode/chrome"
