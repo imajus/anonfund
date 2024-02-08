@@ -1,12 +1,13 @@
 <template name="Home">
-  <h1>Meteor application</h1>
-  <h3>List of accounts</h3>
-  <ul>
-    {{#each state.accounts}}
-    <li>{{name}} ({{address}}): {{balance}} $IRON</li>
+  {{>pageHeader heading='Active Campaigns'}}
+  <ul class="list-unstyled">
+    {{#each campaigns}}
+    <li>
+      <h3>{{name}}</h3>
+      <button class="btn btn-primary">Details</button>
+    </li>
+    {{else}}
+    <li class="text-muted">No active Campaigns at the moment</li>
     {{/each}}
   </ul>
-  <button class="btn btn-primary" data-action="createAccount">
-    Create account
-  </button>
 </template>

@@ -1,0 +1,36 @@
+<template name="CampaignFunding">
+  {{>pageHeader heading=campaign.name}}
+  <div class="row">
+    <div class="col-md-8">
+      <p><strong>Contact:</strong> {{campaign.contact}}</p>
+      <p>{{campaign.description}}</p>
+    </div>
+    <div class="col-md-4">
+      {{#if currentAccount}}
+        <div class="form-group">
+          <label>Your balance:</label>
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" readonly />
+            <div class="input-group-append">
+              <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fundingAmount">Funding amount:</label>
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" id="fundingAmount" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" data-action="fund">Fund this Campaign</button>
+      {{else}}
+        <div class="text-center">
+          <button class="btn btn-warning btn-lg" data-action="connect">Connect Web3 wallet</button>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

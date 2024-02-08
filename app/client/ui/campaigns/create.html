@@ -1,0 +1,22 @@
+<template name="CampaignCreate">
+  {{>pageHeader heading='Create Campaign'}}
+  <div class="w-50">
+    <form>
+      <div class="form-group">
+        <label for="campaignName">Campaign name:</label>
+        <input type="text" name="name" id="campaignName" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="campaignDescription">Description:</label>
+        <textarea name="description" id="campaignDescription" rows="10" class="form-control" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="campaignContact">Contact:</label>
+        <input type="text" name="contact" id="campaignContact" class="form-control" required />
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary btn-lg">Submit Campaign</button>
+      </div>
+    </form>
+  </div>
+</template>

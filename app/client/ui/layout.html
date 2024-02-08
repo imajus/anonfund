@@ -1,5 +1,18 @@
 <template name="Layout">
-  <div class="container-fluid">
-    {{>Template.dynamic template=main}}
+  <div class="container pt-3">
+    <nav class="row">
+      <div class="col-sm-6 text-large">
+        <h1><a href="/">AnonFund</a></h1>
+      </div>
+      <div class="col-sm-6 text-right">
+        {{#if currentUser}}
+          <a href="/" class="btn btn-link">Home</a>
+          | <a href="/profile" class="btn btn-link">My Profile</a> |
+          <a href="/campaigns" class="btn btn-link">My Campaigns</a> |
+          <a href="/create-campaign" class="btn btn-link">Create Campaign</a>
+        {{/if}} {{>loginButtons}}
+      </div>
+    </nav>
+    <main>{{>Template.dynamic template=main}}</main>
   </div>
 </template>

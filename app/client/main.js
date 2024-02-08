@@ -8,6 +8,7 @@ import { BootstrapHelpers } from 'meteor/imajus:bootstrap-helpers';
 import { AutoFormThemeBootstrap4 } from 'meteor/communitypackages:autoform-bootstrap4/static';
 import 'meteor/aldeed:autoform/static';
 import '/init';
+import './ui/helpers';
 import './api';
 import './routes';
 
