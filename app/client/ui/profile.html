@@ -10,10 +10,16 @@
             {{when transfer.completedAt yes=transfer.completedAt.toLocaleString no='No'}}
           </li>
         </ul>
-        <div class="form-group">
-          <label>View-Only Key:</label>
-          <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
-        </div>
+        {{#if transfer.completedAt}}
+          <div class="form-group">
+            <label>View-Only Key:</label>
+            <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
+          </div>
+          <a href="https://skynet.oreoscan.info/en/transaction/{{transfer.hash}}" class="btn btn-link" target="_blank">
+            Transaction
+            {{>i fa='external-link'}}
+          </a>
+        {{/if}}
       {{/card}}
     </div>
   {{else}}

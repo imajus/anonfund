@@ -1,13 +1,13 @@
 <template name="Home">
   {{>pageHeader heading='Active Campaigns'}}
-  <ul class="list-unstyled">
-    {{#each campaigns}}
-    <li>
-      <h3>{{name}}</h3>
-      <button class="btn btn-primary">Details</button>
-    </li>
-    {{else}}
-    <li class="text-muted">No active Campaigns at the moment</li>
-    {{/each}}
-  </ul>
+  {{#each campaigns}}
+    <div class="mb-3">
+      {{#card title=name}}
+        <p>{{description}}</p>
+        <a href="/campaign/{{_id}}" class="btn btn-primary">Go Fund It!</a>
+      {{/card}}
+    </div>
+  {{else}}
+    <p class="text-muted">No active Campaigns at the moment</p>
+  {{/each}}
 </template>

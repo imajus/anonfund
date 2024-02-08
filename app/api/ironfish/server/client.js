@@ -40,7 +40,7 @@ export class IronFishRpcClient {
 
   async getBalance(account) {
     const { confirmed } = await this.request('wallet/getBalance', { account });
-    return confirmed / 10 ** 8;
+    return Number.parseInt(confirmed, 10);
   }
 
   async getAccountTransactions(account) {
