@@ -1,0 +1,6 @@
+[submodule "ironfish"]
+	path = ironfish
+	url = https://github.com/iron-fish/ironfish.git
+[submodule "bridge"]
+	path = bridge
+	url = git@github.com:imajus/ironfish-bridge.git
