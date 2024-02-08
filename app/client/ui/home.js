@@ -8,10 +8,8 @@ TemplateController('Home', {
     campaigns() {
       return Campaigns.find({}, { sort: { createdAt: -1 } });
     },
-    campaignTitle(campaign) {
-      return campaign.userId === Meteor.userId()
-        ? `${campaign.name} (mine)`
-        : campaign.name;
+    isMine(campaign) {
+      return campaign.userId === Meteor.userId();
     },
   },
 });

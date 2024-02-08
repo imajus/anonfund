@@ -3,80 +3,37 @@
     <div class="jumbotron">
       <h1 class="display-4">{{campaign.name}}</h1>
       <p class="lead">Received: <strong>{{formatAmount balance}}</strong> {{Settings.Ethereum.tokenSymbol}}</p>
-      <p class="text-muted">This is visible only to you, because you are creator of the Campaign.</p>
+      <hr class="my-4">
       <div class="form-group">
         <label>View-Only Key:</label>
         <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
       </div>
-      <hr class="my-4">
-      {{#each transfers}}
-        <div class="mb-3">
-          {{#card}}
-            <ul class="list-unstyled mb-0">
-              <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
-              <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
-              <li><strong>Completed:</strong>
-                {{when completedAt yes=completedAt.toLocaleString no='No'}}
-              </li>
-              {{#if completedAt}}
-                <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
-                    target="_blank">
-                    {{shortHash hash}}
-                    {{>i fa='external-link'}}
-                  </a></li>
-              {{/if}}
-            </ul>
-          {{/card}}
-        </div>
-      {{else}}
-        <p>No Donations have been made yet.</p>
-      {{/each}}
+      <p class="text-muted">This is visible only to you, because you are creator of the Campaign.</p>
     </div>
-  {{else}}
-    {{>pageHeader heading=campaign.name}}
-  {{/if}}
-  <div class="row">
-    <div class="col-md-8">
-      <p><strong>Contact:</strong> {{campaign.contact}}</p>
-      <p>{{campaign.description}}</p>
-    </div>
-    <div class="col-md-4">
-      {{#if currentAccount}}
-        <div class="form-group">
-          <label>Your balance:</label>
-          <div class="input-group input-group-lg">
-            <input type="text" class="form-control" value="{{state.balance}}" readonly />
-            <div class="input-group-append">
-              <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
-            </div>
-          </div>
-        </div>
-        <form id="funding">
-          <div class="form-group">
-            <label for="fundingAmount">Funding amount:</label>
-            <div class="input-group input-group-lg">
-              <input type="text" class="form-control" name="amount" id="fundingAmount" {{disabled isLoading true}} />
-              <div class="input-group-append">
-                <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
-              </div>
-            </div>
-          </div>
-          {{#if isLoading}}
-            {{#if isError}}
-              <p class="text-danger">{{or state.status.reason state.status.message}}</p>
-              <button type="reset" class="btn btn-warning btn-lg">Start over</button>
-            {{else}}
-              <p class="text-info">{{state.status}}</p>
+    <h3>Donations</h3>
+    {{#each transfers}}
+      <div class="mb-3">
+        {{#card}}
+          <ul class="list-unstyled mb-0">
+            <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+            <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
+            <li><strong>Completed:</strong>
+              {{when completedAt yes=completedAt.toLocaleString no='No'}}
+            </li>
+            {{#if completedAt}}
+              <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
+                  target="_blank">
+                  {{shortHash hash}}
+                  {{>i fa='external-link'}}
+                </a></li>
             {{/if}}
-          {{else}}
-            <button type="submit" class="btn btn-primary btn-lg">Fund this Campaign</button>
-          {{/if}}
-        </form>
-      {{else}}
-        <div class="text-center">
-          <button class="btn btn-warning btn-lg" data-action="connect">Connect Web3 wallet</button>
-        </div>
-      {{/if}}
-    </div>
-  </div>
+          </ul>
+        {{/card}}
+      </div>
+    {{else}}
+      <p>No Donations have been made yet.</p>
+    {{/each}}
+  {{else}}
+    {{>pageHeader heading='❌ Access denied'}}
+  {{/if}}
 </template>
