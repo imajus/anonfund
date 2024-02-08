@@ -17,4 +17,18 @@ Meteor.methods({
     await Campaigns.updateAsync(campaignId, { $set: { address } });
     return campaignId;
   },
+  async 'Campaigns.fund'(campaignId, amount) {
+    check(this.userId, String);
+    check(campaignId, String);
+    check(amount, Number);
+    await Meteor.users.updateAsync(this.userId, {
+      $push: {
+        'pending': {
+          campaignId,
+          amount,
+          createdAt: new Date(),
+        },
+      },
+    });
+  },
 });
