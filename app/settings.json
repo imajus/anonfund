@@ -1,3 +1,6 @@
 {
-  "public": {}
+  "public": {},
+  "IronFish": {
+    "rpcUrl": "http://localhost:8021"
+  }
 }

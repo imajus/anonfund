@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  ironfish-node:
+    image: ghcr.io/iron-fish/ironfish:latest
+    container_name: ironfish-node
+    restart: unless-stopped
+    volumes:
+      - ironfish:/root/.ironfish
+    ports:
+      - 8020:8020
+      - 9033:9033
+    network_mode: host
+    command: start --networkId=2 --bootstrap='https://ec2-35-80-15-73.us-west-2.compute.amazonaws.com' --rpc.http --rpc.ipc
+  ironfish-miner:
+    image: ghcr.io/iron-fish/ironfish:latest
+    container_name: ironfish-miner
+    depends_on:
+      - ironfish-node
+    restart: unless-stopped
+    volumes:
+      - ironfish:/root/.ironfish
+    command: miners:start
+  # ironfish-bridge:
+  #   build: ./bridge
+  #   container_name: ironfish-bridge
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ironfish:/root/.ironfish
+
+volumes:
+  ironfish:
