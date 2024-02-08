@@ -2,9 +2,9 @@
   {{>pageHeader heading='Active Campaigns'}}
   {{#each campaigns}}
     <div class="mb-3">
-      {{#card title=name}}
+      {{#card title=(campaignTitle this)}}
         <p>{{description}}</p>
-        <a href="/campaign/{{_id}}" class="btn btn-primary">Go Fund It!</a>
+        <a href="/campaign/{{_id}}" class="btn btn-primary">Details &amp; Funding</a>
       {{/card}}
     </div>
   {{else}}

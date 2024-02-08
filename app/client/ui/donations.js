@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { TemplateController } from 'meteor/space:template-controller';
 import { Transfers } from '/api/transfers';
 import { Campaigns } from '/api/campaigns';
-import './profile.html';
+import './donations.html';
 
-TemplateController('Profile', {
+TemplateController('Donations', {
   state: {
     key: null,
   },

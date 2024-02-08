@@ -1,4 +1,4 @@
-<template name="Profile">
+<template name="Donations">
   {{>pageHeader heading='Donations'}}
   {{#each donations}}
     <div class="mb-3">
@@ -9,16 +9,19 @@
           <li><strong>Completed:</strong>
             {{when transfer.completedAt yes=transfer.completedAt.toLocaleString no='No'}}
           </li>
+          {{#if transfer.completedAt}}
+            <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{transfer.hash}}"
+                target="_blank">
+                {{shortHash transfer.hash}}
+                {{>i fa='external-link'}}
+              </a></li>
+          {{/if}}
         </ul>
         {{#if transfer.completedAt}}
           <div class="form-group">
             <label>View-Only Key:</label>
             <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
           </div>
-          <a href="https://skynet.oreoscan.info/en/transaction/{{transfer.hash}}" class="btn btn-link" target="_blank">
-            Transaction
-            {{>i fa='external-link'}}
-          </a>
         {{/if}}
       {{/card}}
     </div>

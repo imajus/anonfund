@@ -1,5 +1,40 @@
-<template name="CampaignFunding">
-  {{>pageHeader heading=campaign.name}}
+<template name="CampaignDetails">
+  {{#if isMine}}
+    <div class="jumbotron">
+      <h1 class="display-4">{{campaign.name}}</h1>
+      <p class="lead">Received: <strong>{{formatAmount balance}}</strong> {{Settings.Ethereum.tokenSymbol}}</p>
+      <p class="text-muted">This is visible only to you, because you are creator of the Campaign.</p>
+      <div class="form-group">
+        <label>View-Only Key:</label>
+        <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
+      </div>
+      <hr class="my-4">
+      {{#each transfers}}
+        <div class="mb-3">
+          {{#card}}
+            <ul class="list-unstyled mb-0">
+              <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+              <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
+              <li><strong>Completed:</strong>
+                {{when completedAt yes=completedAt.toLocaleString no='No'}}
+              </li>
+              {{#if completedAt}}
+                <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
+                    target="_blank">
+                    {{shortHash hash}}
+                    {{>i fa='external-link'}}
+                  </a></li>
+              {{/if}}
+            </ul>
+          {{/card}}
+        </div>
+      {{else}}
+        <p>No Donations have been made yet.</p>
+      {{/each}}
+    </div>
+  {{else}}
+    {{>pageHeader heading=campaign.name}}
+  {{/if}}
   <div class="row">
     <div class="col-md-8">
       <p><strong>Contact:</strong> {{campaign.contact}}</p>
