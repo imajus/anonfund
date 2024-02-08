@@ -3,6 +3,7 @@ import { TemplateController } from 'meteor/space:template-controller';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { Campaigns } from '/api/campaigns';
 import { Accounts, TokenContract } from '/api/ethers/client';
+import { Transfers } from '/api/transfers';
 import './funding.html';
 
 const { tokenSymbol } = Meteor.settings.public.Ethereum;
@@ -32,6 +33,7 @@ TemplateController('CampaignFunding', {
       e.preventDefault();
       const form = e.currentTarget;
       const user = Meteor.user();
+      const campaign = this.campaign();
       const amount = form['amount'].value * 10 ** 8;
       this.state.status = `Depositing ${tokenSymbol} to IronFish network...`;
       try {
@@ -43,8 +45,13 @@ TemplateController('CampaignFunding', {
         this.state.status = 'Waiting for the transaction to be confirmed...';
         await tx.wait();
         this.state.status = 'Finalizing funding operation...';
-        await Meteor.applyAsync('Campaigns.fund', [this.campaignId(), amount], {
-          noRetry: true,
+        await Transfers.insertAsync({
+          'userId': user._id,
+          'campaignId': campaign._id,
+          'from': user.address,
+          'to': campaign.address,
+          'amount': amount,
+          'createdAt': new Date(),
         });
         this.state.status = 'Updating balance...';
         await this.updateBalance();

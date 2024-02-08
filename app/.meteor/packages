@@ -36,3 +36,4 @@ fetch
 accounts-ui
 accounts-password
 check
+littledata:synced-cron
