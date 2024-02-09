@@ -1,38 +1,58 @@
 <template name="CampaignDetails">
   {{#if isMine}}
     <div class="jumbotron">
-      <h1 class="display-4">{{campaign.name}}</h1>
+      <h1 class="display-4">{{campaign.name}} {{#if isArchived}}<small>(closed)</small>{{/if}}</h1>
       <p class="lead">Received: <strong>{{formatAmount balance}}</strong> {{Settings.Ethereum.tokenSymbol}}</p>
       <hr class="my-4">
-      <div class="form-group">
-        <label>View-Only Key:</label>
-        <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
-      </div>
-      <p class="text-muted">This is visible only to you, because you are creator of the Campaign.</p>
-    </div>
-    <h3>Donations</h3>
-    {{#each transfers}}
       <div class="mb-3">
-        {{#card}}
-          <ul class="list-unstyled mb-0">
-            <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
-            <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
-            <li><strong>Completed:</strong>
-              {{when completedAt yes=completedAt.toLocaleString no='No'}}
-            </li>
-            {{#if completedAt}}
-              <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
-                  target="_blank">
-                  {{shortHash hash}}
-                  {{>i fa='external-link'}}
-                </a></li>
-            {{/if}}
-          </ul>
-        {{/card}}
+        {{#collapse id='campaignViewKey' title='🔑 View-Only Key'}}
+          <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
+        {{/collapse}}
       </div>
-    {{else}}
-      <p>No Donations have been made yet.</p>
-    {{/each}}
+      <div class="text-muted">This is visible only to you, because you are creator of the Campaign.</div>
+    </div>
+    <div class="row">
+      {{#unless isArchived}}
+        <div class="col-md-4">
+          <h3>Withdrawal</h3>
+          <p>Once your Campaign is over, you may withdraw all funding received by closing it.</p>
+          <form id="withdraw">
+            <div class="form-group">
+              <label for="amount">Ethereum address:</label>
+              <input type="text" class="form-control" id="address" required>
+              <small class="form-text text-muted">The funds will be securely transferred to the Ethereum address you
+                specified.</small>
+            </div>
+            <button type="submit" class="btn btn-danger">Close &amp; Withdraw Funds</button>
+          </form>
+        </div>
+      {{/unless}}
+      <div class="col-md-8">
+        <h3>Donations</h3>
+        {{#each transfers}}
+          <div class="mb-3">
+            {{#card}}
+              <ul class="list-unstyled mb-0">
+                <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+                <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
+                <li><strong>Completed:</strong>
+                  {{when completedAt yes=completedAt.toLocaleString no='No'}}
+                </li>
+                {{#if completedAt}}
+                  <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
+                      target="_blank">
+                      {{shortHash hash}}
+                      {{>i fa='external-link'}}
+                    </a></li>
+                {{/if}}
+              </ul>
+            {{/card}}
+          </div>
+        {{else}}
+          <p>No Donations have been made yet.</p>
+        {{/each}}
+      </div>
+    </div>
   {{else}}
     {{>pageHeader heading='❌ Access denied'}}
   {{/if}}

@@ -6,7 +6,10 @@ import './home.html';
 TemplateController('Home', {
   helpers: {
     campaigns() {
-      return Campaigns.find({}, { sort: { createdAt: -1 } });
+      return Campaigns.find(
+        { 'archivedAt': null },
+        { sort: { createdAt: -1 } },
+      );
     },
     isMine(campaign) {
       return campaign.userId === Meteor.userId();

@@ -39,7 +39,7 @@ TemplateController('CampaignFunding', {
       this.state.status = `Please confirm depositing ${tokenSymbol}...`;
       try {
         const tx = await TokenContract.transferWithMetadata(
-          Meteor.settings.public.Ethereum.depositAddress,
+          Meteor.settings.public.Ethereum.bridgeAddress,
           amount,
           `0x${user.address}`,
         );

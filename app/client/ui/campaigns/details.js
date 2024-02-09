@@ -23,6 +23,10 @@ TemplateController('CampaignDetails', {
       const campaign = this.campaign();
       return campaign.userId === Meteor.userId();
     },
+    isArchived() {
+      const campaign = this.campaign();
+      return Boolean(campaign.archivedAt);
+    },
     balance() {
       return this.transfers().reduce(
         (total, transfer) => total + transfer.amount,
@@ -34,6 +38,15 @@ TemplateController('CampaignDetails', {
     },
     campaign() {
       return this.campaign();
+    },
+  },
+  events: {
+    async 'submit #withdraw'(e) {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const address = form['address'].value.trim();
+      await Meteor.callAsync('Campaigns.close', this.campaignId(), address);
+      alert('OK');
     },
   },
   private: {
