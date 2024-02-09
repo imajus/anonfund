@@ -14,6 +14,14 @@ export class IronFishRpcClient {
     return publicAddress;
   }
 
+  async importAccount(key, rescan = false) {
+    const { name } = await this.request('wallet/importAccount', {
+      account: key,
+      rescan,
+    });
+    return name;
+  }
+
   async removeAccount(account) {
     this.request('wallet/remove', {
       account,

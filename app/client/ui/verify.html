@@ -1,0 +1,20 @@
+<template name="Verify">
+  {{>pageHeader heading='Verify transactions'}}
+  <form id="verify">
+    <div class="form-group">
+      <label for="viewKey">Enter View-Only key:</label>
+      <textarea name="key" id="viewKey" class="form-control" rows="6" required></textarea>
+    </div>
+    <button class="btn btn-primary btn-large" type="submit">View Transactions</button>
+  </form>
+  {{#each state.transactions}}
+    {{#card}}
+      <ul class="list-unstyled">
+        <li><strong>Timestamp:</strong> {{timestamp}}</li>
+        <li><strong>Source address:</strong> {{source}}</li>
+        <li><strong>Recipient address:</strong> {{recipient}}</li>
+        <li><strong>Amount:</strong> {{amount}} ???</li>
+      </ul>
+    {{/card}}
+  {{/each}}
+</template>

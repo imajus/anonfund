@@ -5,6 +5,7 @@ import './ui/campaigns/funding';
 import './ui/campaigns/details';
 import './ui/campaigns/create';
 import './ui/donations';
+import './ui/verify';
 
 //TODO: Alternative: redirect to some route, which is "Default"
 // FlowRouter.route('/',
@@ -38,5 +39,11 @@ FlowRouter.route('/create-campaign', {
 FlowRouter.route('/donations', {
   action() {
     this.render('Layout', { main: 'Donations' });
+  },
+});
+
+FlowRouter.route('/verify', {
+  action() {
+    this.render('Layout', { main: 'Verify' });
   },
 });
