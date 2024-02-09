@@ -47,6 +47,7 @@ imajus:bootstrap-helpers@0.0.9
 imajus:common-helpers@0.0.3
 imajus:helpers-core@0.0.2
 imajus:html-helpers@0.0.4
+imajus:string-helpers@0.0.3
 insecure@1.0.7
 inter-process-messaging@0.1.1
 jquery@3.0.0

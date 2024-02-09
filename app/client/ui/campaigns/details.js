@@ -8,6 +8,7 @@ import './details.html';
 
 TemplateController('CampaignDetails', {
   state: {
+    status: null,
     key: null,
   },
   onCreated() {
@@ -27,6 +28,12 @@ TemplateController('CampaignDetails', {
       const campaign = this.campaign();
       return Boolean(campaign.archivedAt);
     },
+    isLoading() {
+      return Boolean(this.state.status);
+    },
+    isError() {
+      return this.state.status instanceof Error;
+    },
     balance() {
       return this.transfers().reduce(
         (total, transfer) => total + transfer.amount,
@@ -44,9 +51,16 @@ TemplateController('CampaignDetails', {
     async 'submit #withdraw'(e) {
       e.preventDefault();
       const form = e.currentTarget;
-      const address = form['address'].value.trim();
-      await Meteor.callAsync('Campaigns.close', this.campaignId(), address);
-      alert('OK');
+      this.state.status = 'Withdrawing Campaign funds...';
+      try {
+        const address = form['address'].value.replace(/^0x/, '').trim();
+        await Meteor.callAsync('Campaigns.close', this.campaignId(), address);
+        this.state.status = null;
+        form.reset();
+        alert('OK');
+      } catch (err) {
+        this.state.status = err;
+      }
     },
   },
   private: {

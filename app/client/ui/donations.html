@@ -18,10 +18,9 @@
           {{/if}}
         </ul>
         {{#if transfer.completedAt}}
-          <div class="form-group">
-            <label>View-Only Key:</label>
+          {{#collapse id=(concat 'donationViewKey-' transfer._id) title='🔑 View-Only Key'}}
             <textarea value="{{state.key}}" class="form-control" rows="6" readonly></textarea>
-          </div>
+          {{/collapse}}
         {{/if}}
       {{/card}}
     </div>

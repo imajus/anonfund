@@ -19,11 +19,20 @@
           <form id="withdraw">
             <div class="form-group">
               <label for="amount">Ethereum address:</label>
-              <input type="text" class="form-control" id="address" required>
+              <input type="text" class="form-control" id="address" placeholder="0x......." required>
               <small class="form-text text-muted">The funds will be securely transferred to the Ethereum address you
                 specified.</small>
             </div>
-            <button type="submit" class="btn btn-danger">Close &amp; Withdraw Funds</button>
+            {{#if isLoading}}
+              {{#if isError}}
+                <p class="text-danger">{{or state.status.reason state.status.message}}</p>
+                <button type="reset" class="btn btn-warning btn-lg">Start over</button>
+              {{else}}
+                <p class="text-info">{{state.status}}</p>
+              {{/if}}
+            {{else}}
+              <button type="submit" class="btn btn-danger btn-lg">Close &amp; Withdraw Funds</button>
+            {{/if}}
           </form>
         </div>
       {{/unless}}

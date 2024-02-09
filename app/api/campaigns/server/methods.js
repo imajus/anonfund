@@ -49,9 +49,7 @@ Meteor.methods({
     })
       .fetch()
       .reduce((memo, transfer) => memo + transfer.amount, 0);
-    const memo = Buffer.from(address.replace(/^0x/, ''), 'hex').toString(
-      'base64',
-    );
+    const memo = Buffer.from(address, 'hex').toString('base64');
     const { hash } = await IronFish.sendTransaction(
       campaignId,
       Meteor.settings.IronFish.bridgeAddress,

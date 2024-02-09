@@ -37,3 +37,4 @@ accounts-ui
 accounts-password
 check
 littledata:synced-cron
+imajus:string-helpers
