@@ -42,6 +42,9 @@ Meteor.methods({
     if (campaign.userId !== this.userId) {
       throw new Meteor.Error(403, 'You are not allowed to close this campaign');
     }
+    if (campaign.archivedAt) {
+      throw new Meteor.Error('Campaign is already closed');
+    }
     //TODO: Deny if there are pending transfers
     const amount = Transfers.find({
       'campaignId': campaignId,
@@ -58,7 +61,7 @@ Meteor.methods({
     );
     await Campaigns.updateAsync(campaign._id, {
       $set: {
-        'withdraw': hash,
+        'hash': hash,
         'archivedAt': new Date(),
       },
     });

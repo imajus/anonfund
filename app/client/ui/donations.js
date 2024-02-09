@@ -5,12 +5,7 @@ import { Campaigns } from '/api/campaigns';
 import './donations.html';
 
 TemplateController('Donations', {
-  state: {
-    key: null,
-  },
-  async onCreated() {
-    this.state.key = await Meteor.callAsync('Users.getViewKey');
-  },
+  state: {},
   helpers: {
     donations() {
       return Transfers.find({ 'userId': Meteor.userId() }).map((transfer) => ({

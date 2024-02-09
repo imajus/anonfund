@@ -7,9 +7,9 @@
       <div class="col-sm-6 text-right">
         {{#if currentUser}}
           <a href="/" class="btn btn-link">Home</a>
-          | <a href="/donations" class="btn btn-link">Donations</a> |
+          | <a href="/donations" class="btn btn-link">My Donations</a> |
           <a href="/create-campaign" class="btn btn-link">Create Campaign</a>
-        {{/if}} {{>loginButtons}}
+        {{/if}} {{>loginButtons align='right'}}
       </div>
     </nav>
     <main>{{>Template.dynamic template=main}}</main>

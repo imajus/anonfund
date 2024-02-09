@@ -14,6 +14,14 @@ export class IronFishRpcClient {
     return publicAddress;
   }
 
+  async removeAccount(account) {
+    this.request('wallet/remove', {
+      account,
+      confirm: true,
+      wait: false,
+    });
+  }
+
   async getAccounts() {
     const { accounts } = await this.request('wallet/getAccounts', {
       default: false,
