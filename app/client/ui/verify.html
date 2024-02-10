@@ -1,20 +1,43 @@
 <template name="Verify">
-  {{>pageHeader heading='Verify transactions'}}
-  <form id="verify">
-    <div class="form-group">
-      <label for="viewKey">Enter View-Only key:</label>
-      <textarea name="key" id="viewKey" class="form-control" rows="6" required></textarea>
+  {{>pageHeader heading='Verify donations'}}
+  {{#unless key}}
+    <div class="mb-3">
+      <form id="verify">
+        <div class="form-group">
+          <label for="viewKey">Enter View-Only key:</label>
+          <textarea name="key" id="viewKey" class="form-control" rows="6" required></textarea>
+        </div>
+        <button class="btn btn-primary btn-large" type="submit">View donations</button>
+      </form>
     </div>
-    <button class="btn btn-primary btn-large" type="submit">View Transactions</button>
-  </form>
-  {{#each state.transactions}}
-    {{#card}}
-      <ul class="list-unstyled">
-        <li><strong>Timestamp:</strong> {{timestamp}}</li>
-        <li><strong>Source address:</strong> {{source}}</li>
-        <li><strong>Recipient address:</strong> {{recipient}}</li>
-        <li><strong>Amount:</strong> {{amount}} ???</li>
-      </ul>
-    {{/card}}
-  {{/each}}
+  {{else}}
+    <div class="mb-3">
+      <div class="form-group">
+        <label for="viewKey">View-Only key:</label>
+        <textarea name="key" id="viewKey" class="form-control" rows="6" readonly>{{key}}</textarea>
+      </div>
+    </div>
+    {{#each state.notes}}
+      <div class="mb-3">
+        {{#card}}
+          <ul class="list-unstyled mb-0">
+            <li><strong>Spent:</strong> {{when spent yes='Yes' no='No'}}</li>
+            <li>
+              <strong>Sender:</strong>
+              {{shortHash sender}}
+              {{#if eq sender Settings.IronFish.bridgeAddress}}
+                <a href="https://sepolia.etherscan.io/address/{{Settings.Ethereum.bridgeAddress}}"
+                  target="_blank">{{>i fa='external-link'}}
+                  {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge</a>
+              {{/if}}
+            </li>
+            <li><strong>Amount:</strong> {{amount}} {{Settings.IronFish.assetSymbol}}</li>
+            <li><strong>Memo:</strong> {{memo}}</li>
+          </ul>
+        {{/card}}
+      </div>
+    {{else}}
+      <div class="text-mited">No donations found.</div>
+    {{/each}}
+  {{/unless}}
 </template>

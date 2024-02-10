@@ -55,8 +55,8 @@ Meteor.methods({
     const memo = Buffer.from(address, 'hex').toString('base64');
     const { hash } = await IronFish.sendTransaction(
       campaignId,
-      Meteor.settings.IronFish.bridgeAddress,
-      String(amount - Meteor.settings.IronFish.fee),
+      Meteor.settings.public.IronFish.bridgeAddress,
+      String(amount - Meteor.settings.public.IronFish.fee),
       memo,
     );
     await Campaigns.updateAsync(campaign._id, {

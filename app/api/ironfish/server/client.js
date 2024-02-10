@@ -14,16 +14,15 @@ export class IronFishRpcClient {
     return publicAddress;
   }
 
-  async importAccount(key, rescan = false) {
+  async importAccount(key) {
     const { name } = await this.request('wallet/importAccount', {
       account: key,
-      rescan,
     });
     return name;
   }
 
   async removeAccount(account) {
-    this.request('wallet/remove', {
+    await this.request('wallet/remove', {
       account,
       confirm: true,
       wait: false,
@@ -36,6 +35,13 @@ export class IronFishRpcClient {
       displayName: false,
     });
     return accounts;
+  }
+
+  async getAccountStatus(account) {
+    const result = await this.request('wallet/getAccountStatus', {
+      account,
+    });
+    return result.account;
   }
 
   async getViewKey(account) {
@@ -59,7 +65,7 @@ export class IronFishRpcClient {
     return Number.parseInt(confirmed, 10);
   }
 
-  async getAccountTransactions(account) {
+  async getTransactions(account) {
     try {
       const res = await fetch(`${this.rpcUrl}/wallet/getAccountTransactions`, {
         method: 'post',
@@ -83,6 +89,12 @@ export class IronFishRpcClient {
     }
   }
 
+  async getNotes(account) {
+    const { notes } = await this.request('wallet/getNotes', { account });
+    //TODO: Support pagination
+    return notes;
+  }
+
   async sendTransaction(account, address, amount, memo = '') {
     const { hash, transaction } = await this.request('wallet/sendTransaction', {
       account,
@@ -91,10 +103,10 @@ export class IronFishRpcClient {
           publicAddress: address,
           amount,
           memo,
-          assetId: Meteor.settings.IronFish.assetId,
+          assetId: Meteor.settings.public.IronFish.assetId,
         },
       ],
-      fee: String(Meteor.settings.IronFish.fee),
+      fee: String(Meteor.settings.public.IronFish.fee),
     });
     return { hash, transaction };
   }

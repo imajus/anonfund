@@ -8,7 +8,7 @@ import './methods';
 export async function maybeCompleteTransfer(transfer) {
   const balance = await IronFish.getBalance(transfer.account);
   if (balance >= transfer.amount) {
-    const amount = transfer.amount - Meteor.settings.IronFish.fee;
+    const amount = transfer.amount - Meteor.settings.public.IronFish.fee;
     const campaign = Campaigns.findOne(transfer.campaignId);
     const { hash } = await IronFish.sendTransaction(
       transfer.account,
