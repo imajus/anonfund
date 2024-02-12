@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { TemplateController } from 'meteor/space:template-controller';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { showToast } from 'meteor/imajus:bootstrap-helpers';
 import { Campaigns } from '/api/campaigns';
 import { Accounts, TokenContract } from '/api/ethers/client';
-import { Transfers } from '/api/transfers';
 import './funding.html';
 
 const { tokenSymbol } = Meteor.settings.public.Ethereum;
@@ -55,7 +55,13 @@ TemplateController('CampaignFunding', {
         await this.updateBalance();
         this.state.status = null;
         form.reset();
-        alert('OK');
+        showToast({
+          heading: 'Funding successful',
+          message: `You have successfully funded ${
+            amount / 10 ** 8
+          } ${tokenSymbol} to the campaign`,
+          brand: 'success',
+        });
       } catch (err) {
         this.state.status = err;
       }

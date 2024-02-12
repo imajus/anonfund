@@ -1,18 +1,23 @@
 <template name="Layout">
-  <div class="container pt-3">
-    <nav class="row mb-2">
-      <div class="col-sm-6 text-large">
-        <h1>🥷 <a href="/">AnonFund</a></h1>
-      </div>
-      <div class="col-sm-6 text-right">
-        {{#if currentUser}}
-          <a href="/" class="btn btn-link">Home</a>
-          | <a href="/donations" class="btn btn-link">My Donations</a>
-          | <a href="/create-campaign" class="btn btn-link">Create Campaign</a>
-          | <a href="/verify" class="btn btn-link">Verify</a>
-        {{/if}} {{>loginButtons align='right'}}
-      </div>
-    </nav>
-    <main>{{>Template.dynamic template=main}}</main>
+  <div class="container">
+    <div class="position-fixed" style="z-index: 1100; right: 3em; top: 1em; width: 400px">
+      {{>toastContainer}}
+    </div>
+    <div class="pt-3">
+      <nav class="row mb-2">
+        <div class="col-sm-6 text-large">
+          <h1>🥷 <a href="/">AnonFund</a></h1>
+        </div>
+        <div class="col-sm-6 text-right">
+          {{#if currentUser}}
+            <a href="/" class="btn btn-link">Home</a>
+            | <a href="/donations" class="btn btn-link">My Donations</a>
+            | <a href="/create-campaign" class="btn btn-link">Create Campaign</a>
+            | <a href="/verify" class="btn btn-link">Verify</a>
+          {{/if}} {{>loginButtons align='right'}}
+        </div>
+      </nav>
+      <main>{{>Template.dynamic template=main}}</main>
+    </div>
   </div>
 </template>

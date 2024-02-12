@@ -31,7 +31,7 @@
               </div>
               {{#if isLoading}}
                 {{#if isError}}
-                  <p class="text-danger">{{or state.status.reason state.status.message}}</p>
+                  <p class="text-danger">Funding request can't be fulfilled.</p>
                   <button type="reset" class="btn btn-warning btn-lg">Start over</button>
                 {{else}}
                   <p class="text-info">{{state.status}}</p>

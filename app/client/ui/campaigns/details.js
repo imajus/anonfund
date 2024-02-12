@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { TemplateController } from 'meteor/space:template-controller';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { showToast } from 'meteor/imajus:bootstrap-helpers';
 import { Campaigns } from '/api/campaigns';
 import { Accounts, TokenContract } from '/api/ethers/client';
 import { Transfers } from '/api/transfers';
 import './details.html';
+
+const { tokenSymbol } = Meteor.settings.public.Ethereum;
 
 TemplateController('CampaignDetails', {
   state: {
@@ -57,7 +60,13 @@ TemplateController('CampaignDetails', {
         await Meteor.callAsync('Campaigns.close', this.campaignId(), address);
         this.state.status = null;
         form.reset();
-        alert('OK');
+        showToast({
+          heading: 'Campaign is closed',
+          message: `You have successfully withdrawn ${
+            this.state.balance / 10 ** 8
+          } ${tokenSymbol}`,
+          brand: 'success',
+        });
       } catch (err) {
         this.state.status = err;
       }
