@@ -7,10 +7,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run --settings=settings.json --exclude-archs=web.browser.legacy,web.cordova --raw-logs",
-    "start-node-dev": "sudo docker run --mount source=ironfish,target=/root/.ironfish --name ironfish --rm ghcr.io/iron-fish/ironfish:latest start --networkId=2 --bootstrap='https://ec2-35-80-15-73.us-west-2.compute.amazonaws.com'",
     "deploy": "meteor deploy anonfund.meteorapp.com --settings=.env/settings.demo.json --free --mongo",
-    "node-dev-cli": "sudo docker exec -it ironfish /usr/bin/ironfish",
-    "node-dev-mine": "npm run node-dev-cli miners:start",
     "bridge-dev-cli": "sudo docker run --mount source=ironfish,target=/root/.ironfish --name ironfish-bridge --rm ironfish-bridge-cli:latest"
   },
   "dependencies": {
