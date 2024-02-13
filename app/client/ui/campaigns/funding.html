@@ -31,10 +31,10 @@
               </div>
               {{#if isLoading}}
                 {{#if isError}}
-                  <p class="text-danger">Funding request can't be fulfilled.</p>
+                  <p class="alert alert-danger">Funding request can't be fulfilled.</p>
                   <button type="reset" class="btn btn-warning btn-lg">Start over</button>
                 {{else}}
-                  <p class="text-info">{{state.status}}</p>
+                  <p class="alert alert-info">{{state.status}}</p>
                 {{/if}}
               {{else}}
                 <button type="submit" class="btn btn-primary btn-lg">Fund this Campaign</button>

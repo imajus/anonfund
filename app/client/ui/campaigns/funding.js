@@ -14,6 +14,13 @@ TemplateController('CampaignFunding', {
     status: null,
     key: null,
   },
+  onRendered() {
+    this.autorun(async () => {
+      if (Accounts.isConnected()) {
+        await this.updateBalance();
+      }
+    });
+  },
   helpers: {
     campaign() {
       return this.campaign();
@@ -28,7 +35,6 @@ TemplateController('CampaignFunding', {
   events: {
     async 'click [data-action=connect]'() {
       await Accounts.connect();
-      await this.updateBalance();
     },
     async 'submit #funding'(e) {
       e.preventDefault();
@@ -43,7 +49,7 @@ TemplateController('CampaignFunding', {
           campaign._id,
           amount,
         );
-        this.state.status = 'Initating the trasfer operation...';
+        this.state.status = 'Please confirm the trasfer operation...';
         const tx = await TokenContract.transferWithMetadata(
           Meteor.settings.public.Ethereum.bridgeAddress,
           amount,
@@ -62,6 +68,7 @@ TemplateController('CampaignFunding', {
           } ${tokenSymbol} to the campaign`,
           brand: 'success',
         });
+        FlowRouter.go('/donations');
       } catch (err) {
         this.state.status = err;
       }

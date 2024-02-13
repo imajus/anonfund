@@ -44,8 +44,12 @@
               <ul class="list-unstyled mb-0">
                 <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
                 <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
-                <li><strong>Completed:</strong>
-                  {{when completedAt yes=completedAt.toLocaleString no='No'}}
+                <li><strong>Status:</strong>
+                  {{#if completedAt}}
+                    <span class="badge badge-success badge-pill">{{>i fa='check-circle-o'}} Completed</span>
+                  {{else}}
+                    <span class="badge badge-warning badge-pill">{{>i fa='spinner' spin=true}} Pending</span>
+                  {{/if}}
                 </li>
                 {{#if completedAt}}
                   <li><strong>Transaction:</strong> <a href="https://skynet.oreoscan.info/en/transaction/{{hash}}"
