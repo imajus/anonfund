@@ -4,6 +4,7 @@ import './polyfills';
 import './api';
 import './users';
 import './transfers';
+import './fixtures';
 import { IronFish } from '/api/ironfish/server';
 
 Meteor.startup(async () => {
