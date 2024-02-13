@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run --settings=settings.json --exclude-archs=web.browser.legacy,web.cordova --raw-logs",
-    "deploy": "meteor deploy anonfund.meteorapp.com --settings=.env/settings.demo.json --free --mongo",
+    "deploy": "meteor deploy anonfund.meteorapp.com --settings=.env/settings.demo.json --free --mongo --cache-build",
     "bridge-dev-cli": "sudo docker run --mount source=ironfish,target=/root/.ironfish --name ironfish-bridge --rm ironfish-bridge-cli:latest"
   },
   "dependencies": {
