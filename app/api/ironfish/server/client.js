@@ -14,9 +14,10 @@ export class IronFishRpcClient {
     return publicAddress;
   }
 
-  async importAccount(key) {
+  async importAccount(key, account) {
     const { name } = await this.request('wallet/importAccount', {
       account: key,
+      name: account,
     });
     return name;
   }
@@ -87,6 +88,14 @@ export class IronFishRpcClient {
       console.error(err);
       throw new Meteor.Error('ironFishRpc', err.message);
     }
+  }
+
+  async getTransaction(hash, account = null) {
+    const { transaction } = await this.request('wallet/getAccountTransaction', {
+      hash,
+      account,
+    });
+    return transaction;
   }
 
   async getNotes(account) {

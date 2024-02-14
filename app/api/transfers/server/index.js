@@ -24,8 +24,8 @@ export async function maybeCompleteTransfer(transfer) {
       },
     });
     console.info('Completed transfer', transfer._id, transfer.amount);
-    // Drop the account
-    await IronFish.removeAccount(transfer.account);
+    //TODO: Drop the transfer account
+    // await IronFish.removeAccount(transfer.account);
     console.debug('Removed transfer account', transfer.account);
   } else {
     console.debug(

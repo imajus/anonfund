@@ -1,5 +1,5 @@
 <template name="Verify">
-  {{>pageHeader heading='Verify donations'}}
+  {{>pageHeader heading='Verify transactions'}}
   {{#unless key}}
     <div class="mb-3">
       <form id="verify">
@@ -23,16 +23,17 @@
           <ul class="list-unstyled mb-0">
             <li><strong>Spent:</strong> {{when spent yes='Yes' no='No'}}</li>
             <li>
+              <strong>Owner:</strong>
+              <code>{{shortHash owner}}</code>
+              {{>ironFishAddressBadge address=owner}}
+            </li>
+            <li>
               <strong>Sender:</strong>
-              {{shortHash sender}}
-              {{#if eq sender Settings.IronFish.bridgeAddress}}
-                <a href="https://sepolia.etherscan.io/address/{{Settings.Ethereum.bridgeAddress}}"
-                  target="_blank">{{>i fa='external-link'}}
-                  {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge</a>
-              {{/if}}
+              <code>{{shortHash sender}}</code>
+              {{>ironFishAddressBadge address=sender}}
             </li>
             <li><strong>Amount:</strong> {{amount}} {{Settings.IronFish.assetSymbol}}</li>
-            <li><strong>Memo:</strong> {{memo}}</li>
+            <li><strong>Memo:</strong> {{or memo '<empty>'}}</li>
           </ul>
         {{/card}}
       </div>
@@ -40,4 +41,25 @@
       <div class="text-mited">No donations found.</div>
     {{/each}}
   {{/unless}}
+</template>
+
+<template name="ironFishAddressBadge">
+  {{#if isBridgeAddress}}
+    <a href="https://sepolia.etherscan.io/address/{{Settings.Ethereum.bridgeAddress}}" target="_blank"
+      class="badge badge-info">{{>i fa='external-link'}}
+      {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge</a>
+  {{else if isTransferAddress}}
+    {{#let transfer=transferByAddress}}
+      <a href="https://sepolia.etherscan.io/address/{{transfer.origin}}" target="_blank"
+        class="badge badge-success">{{>i fa='external-link'}}
+        Ethereum address</a>
+    {{/let}}
+  {{else if isCampaignAddress}}
+    {{#let campaign=campaignByAddress}}
+      <a href="/funding/{{campaign._id}}" class="badge badge-primary">
+        {{campaign.name}}</a>
+    {{/let}}
+  {{else}}
+    <span class="badge badge-warning">Unknown</span>
+  {{/if}}
 </template>

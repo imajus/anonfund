@@ -4,31 +4,6 @@ import { Random } from 'meteor/random';
 import { IronFish } from './client';
 import { Transfers } from '/api/transfers';
 
-async function fetchNotesByViewOnlyKey(key) {
-  let account;
-  let temporary = true;
-  try {
-    account = await IronFish.importAccount(key);
-  } catch (err) {
-    const prefix = 'Account already exists with the name ';
-    if (err.reason?.startsWith(prefix)) {
-      account = err.reason.substr(prefix.length);
-      temporary = false;
-    } else {
-      throw err;
-    }
-  }
-  //FIXME: A workaround to bypass the case of getting empty list of transactions
-  await new Promise((resolve) => {
-    Meteor.setTimeout(resolve, 1000);
-  });
-  const notes = await IronFish.getNotes(account);
-  if (temporary) {
-    await IronFish.removeAccount(account);
-  }
-  return notes;
-}
-
 Meteor.methods({
   async 'IronFish.createAccount'() {
     const name = Random.id();
@@ -46,17 +21,41 @@ Meteor.methods({
   },
   async 'IronFish.notes'(key) {
     check(key, String);
-    const notes = await fetchNotesByViewOnlyKey(key);
-    // Keep only relevant assets
-    return notes
-      .filter(
-        ({ assetId }) => assetId === Meteor.settings.public.IronFish.assetId,
-      )
-      .map(({ memo, spent, sender, value }) => ({
-        memo,
-        spent,
-        sender,
-        amount: value / 10 ** 8,
-      }));
+    const { assetId } = Meteor.settings.public.IronFish;
+    // Use new name to avoid conflicts
+    const account = await IronFish.importAccount(key, Random.id());
+    //FIXME: A workaround to bypass the case of getting empty list of transactions
+    await new Promise((resolve) => {
+      Meteor.setTimeout(resolve, 1000);
+    });
+    try {
+      const notes = await IronFish.getNotes(account);
+      // Keep only relevant assets
+      return await Promise.all(
+        notes
+          .filter((note) => note.assetId === assetId)
+          .map(
+            async ({
+              transactionHash: hash,
+              memo,
+              spent,
+              owner,
+              sender,
+              value,
+            }) => {
+              const tx = await IronFish.getTransaction(hash, account);
+              return {
+                memo,
+                spent,
+                owner,
+                sender,
+                amount: value / 10 ** 8,
+              };
+            },
+          ),
+      );
+    } finally {
+      await IronFish.removeAccount(account);
+    }
   },
 });

@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { TemplateController } from 'meteor/space:template-controller';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { Transfers } from '/api/transfers';
+import { Campaigns } from '/api/campaigns';
 import './verify.html';
 
 TemplateController('Verify', {
@@ -31,6 +33,31 @@ TemplateController('Verify', {
   private: {
     key() {
       return FlowRouter.getQueryParam('key');
+    },
+  },
+});
+
+TemplateController('ironFishAddressBadge', {
+  helpers: {
+    isBridgeAddress() {
+      const { address } = this.data;
+      return address === Meteor.settings.public.IronFish.bridgeAddress;
+    },
+    isTransferAddress() {
+      const { address } = this.data;
+      return Transfers.find({ address }).count() > 0;
+    },
+    transferByAddress() {
+      const { address } = this.data;
+      return Transfers.findOne({ address });
+    },
+    isCampaignAddress() {
+      const { address } = this.data;
+      return Campaigns.find({ address }).count() > 0;
+    },
+    campaignByAddress() {
+      const { address } = this.data;
+      return Campaigns.findOne({ address });
     },
   },
 });

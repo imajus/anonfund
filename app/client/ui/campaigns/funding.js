@@ -3,6 +3,7 @@ import { TemplateController } from 'meteor/space:template-controller';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { showToast } from 'meteor/imajus:bootstrap-helpers';
 import { Campaigns } from '/api/campaigns';
+import { Transfers } from '/api/transfers';
 import { Accounts, TokenContract } from '/api/ethers/client';
 import './funding.html';
 
@@ -44,20 +45,26 @@ TemplateController('CampaignFunding', {
       this.state.status = `Please confirm depositing ${tokenSymbol}...`;
       try {
         this.state.status = 'Creating disposable transfer address...';
-        const { address } = await Meteor.callAsync(
+        const { transferId, address } = await Meteor.callAsync(
           'Transfers.create',
           campaign._id,
           amount,
+          Accounts.current.get(),
         );
         this.state.status = 'Please confirm the trasfer operation...';
-        const tx = await TokenContract.transferWithMetadata(
-          Meteor.settings.public.Ethereum.bridgeAddress,
-          amount,
-          `0x${address}`,
-        );
-        this.state.status = 'Waiting for the transaction to be confirmed...';
-        await tx.wait();
-        this.state.status = 'Updating balance...';
+        try {
+          const tx = await TokenContract.transferWithMetadata(
+            Meteor.settings.public.Ethereum.bridgeAddress,
+            amount,
+            `0x${address}`,
+          );
+          this.state.status = 'Waiting for the transaction to be confirmed...';
+          await tx.wait();
+        } catch (err) {
+          // Cleanup
+          await Transfers.removeAsync(transferId);
+          throw err;
+        }
         await this.updateBalance();
         this.state.status = null;
         form.reset();

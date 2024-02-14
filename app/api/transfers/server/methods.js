@@ -6,10 +6,11 @@ import { IronFish } from '/api/ironfish/server';
 import { Transfers } from '../collection';
 
 Meteor.methods({
-  async 'Transfers.create'(campaignId, amount) {
+  async 'Transfers.create'(campaignId, amount, origin) {
     check(this.userId, String);
     check(campaignId, String);
     check(amount, Number);
+    check(origin, String);
     const campaign = Campaigns.findOne(campaignId);
     if (!campaign) {
       throw new Meteor.Error('Campaign not found');
@@ -28,6 +29,7 @@ Meteor.methods({
       'address': address,
       'key': key,
       'amount': amount,
+      'origin': origin,
       'createdAt': new Date(),
     });
     return { transferId, address };
