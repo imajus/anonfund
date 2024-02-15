@@ -21,12 +21,82 @@ services:
     volumes:
       - ironfish:/root/.ironfish
     command: miners:start
-  # ironfish-bridge:
-  #   build: ./bridge
-  #   container_name: ironfish-bridge
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ironfish:/root/.ironfish
+  ironfish-postgres:
+    image: postgres:13.3
+    container_name: ironfish-bridge-postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      - ironfish-bridge
+    volumes:
+      - ironfish-bridge-postgres:/var/lib/postgresql/data
+      - ./bridge/api/docker-compose.sql:/docker-entrypoint-initdb.d/init.sql
+  ironfish-bridge-api:
+    build: ./bridge
+    image: ironfish-bridge:dev
+    container_name: ironfish-bridge-api
+    restart: unless-stopped
+    depends_on:
+      - ironfish-postgres
+    environment:
+      - GRAPHILE_CONCURRENCY
+      - IRONFISH_BRIDGE_ADDRESS
+      - IRONFISH_BRIDGE_API_KEY
+      - DATABASE_CONNECTION_POOL_URL
+      - DATABASE_URL
+      - NODE_ENV=development
+    volumes:
+      - ironfish:/root/.ironfish
+    networks:
+      - ironfish-bridge
+    entrypoint: node
+    command: /usr/share/ironfish-bridge-api/api/src/main.js
+  ironfish-bridge-worker:
+    image: ironfish-bridge:dev
+    container_name: ironfish-bridge-worker
+    restart: unless-stopped
+    depends_on:
+      - ironfish-postgres
+    environment:
+      - GRAPHILE_CONCURRENCY
+      - IRONFISH_BRIDGE_API_KEY
+      - REFRESH_WIRON_TRANSFERS_PERIOD_MINUTES
+      - REFRESH_TEST_USDC_TRANSFERS_PERIOD_MINUTES
+      - TEST_USDC_DEPLOYER_PRIVATE_KEY
+      - TEST_USDC_DEPOSIT_ADDRESS
+      - TEST_USDC_FINALITY_HEIGHT_RANGE
+      - TEST_USDC_QUERY_HEIGHT_RANGE
+      - WIRON_DEPLOYER_PRIVATE_KEY
+      - WIRON_DEPOSIT_ADDRESS
+      - WIRON_FINALITY_HEIGHT_RANGE
+      - WIRON_QUERY_HEIGHT_RANGE
+      - DATABASE_CONNECTION_POOL_URL
+      - DATABASE_URL
+      - NODE_ENV=development
+    volumes:
+      - ironfish:/root/.ironfish
+    networks:
+      - ironfish-bridge
+    entrypoint: node
+    command: /usr/share/ironfish-bridge-api/api/src/worker.js
+  ironfish-bridge-relay:
+    image: ironfish-bridge:dev
+    container_name: ironfish-bridge-relay
+    restart: unless-stopped
+    environment:
+      - IRONFISH_BRIDGE_API_KEY
+      - IRONFISH_BRIDGE_ADDRESS
+    volumes:
+      - ironfish:/root/.ironfish
+    networks:
+      - ironfish-bridge
+    command: relay -e http://ironfish-bridge-api:8003 -t $IRONFISH_BRIDGE_API_KEY -k $IRONFISH_BRIDGE_INCOMING_VIEW_KEY -o $IRONFISH_BRIDGE_OUTGOING_VIEW_KEY -a $IRONFISH_BRIDGE_ADDRESS -c $IRONFISH_RELAY_CONFIRMATIONS
 
 volumes:
   ironfish:
+  ironfish-bridge-postgres:
+
+networks:
+  ironfish-bridge:
