@@ -27,6 +27,12 @@ Meteor.startup(async () => {
         contact: 'Jason Mitchel <jason.mitchel@example.com>',
       },
       {
+        name: 'Supporting Victims of Domestic Violence',
+        description:
+          'I am writing on behalf of a nonprofit organization committed to assisting victims of domestic violence and promoting community awareness and support. We are dedicated to providing comprehensive services to individuals affected by domestic violence, including shelter, counseling, legal assistance, and empowerment programs.\nWe are reaching out to seek financial support for our ongoing efforts in supporting victims of domestic violence. The current COVID-19 pandemic has amplified the challenges faced by survivors, with incidents of domestic violence increasing worldwide. As a result, our organization has witnessed a surge in demand for our services, putting a strain on our existing resources.',
+        contact: 'Ann Victory <ann@domesticviolence.com>',
+      },
+      {
         name: 'Empower the Opposition in Wonderia',
         description:
           'Introduction: We are writing to request your support in funding our crucial mission to aid the opposition movement in Wonderia, a country currently oppressed by a corrupt and totalitarian government. As advocates for justice, democracy, and human rights, we firmly believe in the importance of standing with those fighting for a better future.\nBackground: Wonderia, a nation rich in potential, is facing immense challenges due to a government riddled with corruption and a disregard for basic human rights. The opposition movement, composed of courageous individuals from diverse backgrounds, is tirelessly working towards bringing about meaningful change and establishing a just and democratic society in Wonderia.\nGoals: With your support, we aim to empower the opposition movement in Wonderia.',
