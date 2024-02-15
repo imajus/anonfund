@@ -37,12 +37,12 @@
                   <p class="alert alert-info">{{state.status}}</p>
                 {{/if}}
               {{else}}
-                <button type="submit" class="btn btn-primary btn-lg">Fund this Campaign</button>
+                <button type="submit" class="btn btn-primary btn-lg">{{>i fa='heart'}} Fund this Campaign</button>
               {{/if}}
             </form>
           {{else}}
             <div class="text-center">
-              <button class="btn btn-warning btn-lg" data-action="connect">Connect Web3 wallet</button>
+              <button class="btn btn-warning btn-lg" data-action="connect">{{>i fa='link'}} Connect Web3 wallet</button>
             </div>
           {{/if}}
         {{else}}

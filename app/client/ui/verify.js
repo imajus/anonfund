@@ -7,13 +7,19 @@ import './verify.html';
 
 TemplateController('Verify', {
   state: {
+    loading: false,
     notes: null,
   },
   onCreated() {
     this.autorun(async () => {
       const key = this.key();
       if (key) {
-        this.state.notes = await Meteor.callAsync('IronFish.notes', key);
+        this.state.loading = true;
+        try {
+          this.state.notes = await Meteor.callAsync('IronFish.notes', key);
+        } finally {
+          this.state.loading = false;
+        }
       }
     });
   },
@@ -34,6 +40,12 @@ TemplateController('Verify', {
     key() {
       return FlowRouter.getQueryParam('key');
     },
+  },
+});
+
+TemplateController('ironFishNoteMemo', {
+  onRendered() {
+    this.$('[data-toggle="tooltip"]').tooltip();
   },
 });
 

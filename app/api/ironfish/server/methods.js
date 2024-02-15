@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Random } from 'meteor/random';
 import { IronFish } from './client';
-import { Transfers } from '/api/transfers';
 
 Meteor.methods({
   async 'IronFish.createAccount'() {
@@ -26,7 +25,7 @@ Meteor.methods({
     const account = await IronFish.importAccount(key, Random.id());
     //FIXME: A workaround to bypass the case of getting empty list of transactions
     await new Promise((resolve) => {
-      Meteor.setTimeout(resolve, 1000);
+      Meteor.setTimeout(resolve, 2000);
     });
     try {
       const notes = await IronFish.getNotes(account);
@@ -34,25 +33,13 @@ Meteor.methods({
       return await Promise.all(
         notes
           .filter((note) => note.assetId === assetId)
-          .map(
-            async ({
-              transactionHash: hash,
-              memo,
-              spent,
-              owner,
-              sender,
-              value,
-            }) => {
-              const tx = await IronFish.getTransaction(hash, account);
-              return {
-                memo,
-                spent,
-                owner,
-                sender,
-                amount: value / 10 ** 8,
-              };
-            },
-          ),
+          .map(async ({ memo, spent, owner, sender, value }) => ({
+            memo,
+            spent,
+            owner,
+            sender,
+            amount: value / 10 ** 8,
+          })),
       );
     } finally {
       await IronFish.removeAccount(account);

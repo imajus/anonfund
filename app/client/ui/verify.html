@@ -23,24 +23,39 @@
           <ul class="list-unstyled mb-0">
             <li><strong>Spent:</strong> {{when spent yes='Yes' no='No'}}</li>
             <li>
-              <strong>Owner:</strong>
-              <code>{{shortHash owner}}</code>
-              {{>ironFishAddressBadge address=owner}}
-            </li>
-            <li>
               <strong>Sender:</strong>
               <code>{{shortHash sender}}</code>
               {{>ironFishAddressBadge address=sender}}
             </li>
+            <li>
+              <strong>Owner:</strong>
+              <code>{{shortHash owner}}</code>
+              {{>ironFishAddressBadge address=owner}}
+            </li>
             <li><strong>Amount:</strong> {{amount}} {{Settings.IronFish.assetSymbol}}</li>
-            <li><strong>Memo:</strong> {{or memo '<empty>'}}</li>
+            {{#if memo}}
+              <li>
+                <strong>Memo:</strong>
+                {{>ironFishNoteMemo memo=memo}}
+              </li>
+            {{/if}}
           </ul>
         {{/card}}
       </div>
     {{else}}
-      <div class="text-mited">No donations found.</div>
+      {{#if state.loading}}
+        {{>i fa='spinner' spin=true size='2x'}}
+      {{else}}
+        <div class="text-mited">No donations found.</div>
+      {{/if}}
     {{/each}}
   {{/unless}}
+</template>
+
+<template name="ironFishNoteMemo">
+  {{memo}}
+  <span data-toggle="tooltip" data-placement="right"
+    title="For {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge operations, it represents an ID of operation, which could be used to reconstruct the entire chain of funds flow">{{>i fa='info-circle'}}</span>
 </template>
 
 <template name="ironFishAddressBadge">
