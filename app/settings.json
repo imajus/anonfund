@@ -1,14 +1,14 @@
 {
   "public": {
-    "Ethereum": {
+    "Scroll": {
       "tokenSymbol": "WIRON",
-      "tokenAddress": "0x3dE166740d64d522AbFDa77D9d878dfedfDEEEDE",
-      "bridgeAddress": "0x664b8b9892b7560b356ef0f8d44cbd1f6628e388"
+      "tokenAddress": "0x990e7DAdFc61C7B1bFbb4c668691De40B9e9E119",
+      "bridgeAddress": "0x6F31973b9959f1089C35a15596c0bc813f1C8Dd4"
     },
     "IronFish": {
       "assetSymbol": "$IRON",
       "assetId": "51f33a2f14f92735e562dc658a5639279ddca3d5079a6d1242b2a588a9cbf44c",
-      "bridgeAddress": "1d1a1fb9fafd7de32c7f02115207d6fe9df1272f5b4bedbbfa1330eba88c5ce2",
+      "bridgeAddress": "8a373168576ff7229f54f700761cb0f41b992e676a039fc9915a154eff63ed2b",
       "fee": 1
     }
   },

@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-import { getProvider } from './core';
+import { getProvider, getSigner } from './core';
 
 export { Accounts } from './accounts';
 export { TokenContract } from './token';
+export { getProvider, getSigner };
 
 Meteor.startup(async () => {
   const provider = getProvider();

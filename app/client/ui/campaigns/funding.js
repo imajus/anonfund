@@ -4,18 +4,26 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { showToast } from 'meteor/imajus:bootstrap-helpers';
 import { Campaigns } from '/api/campaigns';
 import { Transfers } from '/api/transfers';
-import { Accounts, TokenContract } from '/api/ethers/client';
+import { Accounts, TokenContract, getProvider } from '/api/ethers/client';
 import './funding.html';
 
-const { tokenSymbol } = Meteor.settings.public.Ethereum;
+const { tokenSymbol } = Meteor.settings.public.Scroll;
 
 TemplateController('CampaignFunding', {
   state: {
+    network: null,
     balance: null,
     status: null,
     key: null,
   },
   onRendered() {
+    const provider = getProvider();
+    provider.getNetwork().then(({ chainId }) => {
+      this.state.network = chainId;
+    });
+    provider.on('network', ({ chainId }) => {
+      this.state.network = chainId;
+    });
     this.autorun(async () => {
       if (Accounts.isConnected()) {
         await this.updateBalance();
@@ -25,6 +33,9 @@ TemplateController('CampaignFunding', {
   helpers: {
     campaign() {
       return this.campaign();
+    },
+    isCorrectNetwork() {
+      return this.state.network === 534351;
     },
     isLoading() {
       return Boolean(this.state.status);
@@ -54,7 +65,7 @@ TemplateController('CampaignFunding', {
         this.state.status = 'Please confirm the trasfer operation...';
         try {
           const tx = await TokenContract.transferWithMetadata(
-            Meteor.settings.public.Ethereum.bridgeAddress,
+            Meteor.settings.public.Scroll.bridgeAddress,
             amount,
             `0x${address}`,
           );

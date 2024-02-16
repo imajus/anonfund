@@ -55,19 +55,19 @@
 <template name="ironFishNoteMemo">
   {{memo}}
   <span data-toggle="tooltip" data-placement="right"
-    title="For {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge operations, it represents an ID of operation, which could be used to reconstruct the entire chain of funds flow">{{>i fa='info-circle'}}</span>
+    title="For {{Settings.Scroll.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge operations, it represents an ID of operation, which could be used to reconstruct the entire chain of funds flow">{{>i fa='info-circle'}}</span>
 </template>
 
 <template name="ironFishAddressBadge">
   {{#if isBridgeAddress}}
-    <a href="https://sepolia.etherscan.io/address/{{Settings.Ethereum.bridgeAddress}}" target="_blank"
+    <a href="https://sepolia.etherscan.io/address/{{Settings.Scroll.bridgeAddress}}" target="_blank"
       class="badge badge-info">{{>i fa='external-link'}}
-      {{Settings.Ethereum.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge</a>
+      {{Settings.Scroll.tokenSymbol}} ⇒ {{Settings.IronFish.assetSymbol}} bridge</a>
   {{else if isTransferAddress}}
     {{#let transfer=transferByAddress}}
       <a href="https://sepolia.etherscan.io/address/{{transfer.origin}}" target="_blank"
         class="badge badge-success">{{>i fa='external-link'}}
-        Ethereum address</a>
+        Scroll address</a>
     {{/let}}
   {{else if isCampaignAddress}}
     {{#let campaign=campaignByAddress}}

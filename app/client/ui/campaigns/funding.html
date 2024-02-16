@@ -9,37 +9,41 @@
       <div class="col-md-4">
         {{#if currentUser}}
           {{#if currentAccount}}
-            <div class="form-group">
-              <label>Your balance:</label>
-              <div class="input-group input-group-lg">
-                <input type="text" class="form-control" value="{{state.balance}}" readonly />
-                <div class="input-group-append">
-                  <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
-                </div>
-              </div>
-            </div>
-            <form id="funding">
+            {{#if isCorrectNetwork}}
               <div class="form-group">
-                <label for="fundingAmount">Funding amount:</label>
+                <label>Your balance:</label>
                 <div class="input-group input-group-lg">
-                  <input type="text" class="form-control" name="amount" id="fundingAmount" {{disabled isLoading
-                    true}} />
+                  <input type="text" class="form-control" value="{{state.balance}}" readonly />
                   <div class="input-group-append">
-                    <span class="input-group-text">{{Settings.Ethereum.tokenSymbol}}</span>
+                    <span class="input-group-text">{{Settings.Scroll.tokenSymbol}}</span>
                   </div>
                 </div>
               </div>
-              {{#if isLoading}}
-                {{#if isError}}
-                  <p class="alert alert-danger">Funding request can't be fulfilled.</p>
-                  <button type="reset" class="btn btn-warning btn-lg">Start over</button>
+              <form id="funding">
+                <div class="form-group">
+                  <label for="fundingAmount">Funding amount:</label>
+                  <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" name="amount" id="fundingAmount" {{disabled isLoading
+                      true}} />
+                    <div class="input-group-append">
+                      <span class="input-group-text">{{Settings.Scroll.tokenSymbol}}</span>
+                    </div>
+                  </div>
+                </div>
+                {{#if isLoading}}
+                  {{#if isError}}
+                    <p class="alert alert-danger">Funding request can't be fulfilled.</p>
+                    <button type="reset" class="btn btn-warning btn-lg">Start over</button>
+                  {{else}}
+                    <p class="alert alert-info">{{state.status}}</p>
+                  {{/if}}
                 {{else}}
-                  <p class="alert alert-info">{{state.status}}</p>
+                  <button type="submit" class="btn btn-primary btn-lg">{{>i fa='heart'}} Fund this Campaign</button>
                 {{/if}}
-              {{else}}
-                <button type="submit" class="btn btn-primary btn-lg">{{>i fa='heart'}} Fund this Campaign</button>
-              {{/if}}
-            </form>
+              </form>
+            {{else}}
+              <div class="alert alert-warning">Please switch to Scroll Sepolia in your Web3 wallet.</div>
+            {{/if}}
           {{else}}
             <div class="text-center">
               <button class="btn btn-warning btn-lg" data-action="connect">{{>i fa='link'}} Connect Web3 wallet</button>

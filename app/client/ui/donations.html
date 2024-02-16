@@ -4,7 +4,7 @@
     <div class="mb-3">
       {{#card title=campaign.name}}
         <ul class="list-unstyled">
-          <li><strong>Amount:</strong> {{formatAmount transfer.amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+          <li><strong>Amount:</strong> {{formatAmount transfer.amount}} {{Settings.Scroll.tokenSymbol}}</li>
           <li><strong>Created:</strong> {{transfer.createdAt.toLocaleString}}</li>
           <li><strong>Status:</strong>
             {{#if transfer.completedAt}}

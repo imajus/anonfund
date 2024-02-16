@@ -7,7 +7,7 @@ import { Accounts, TokenContract } from '/api/ethers/client';
 import { Transfers } from '/api/transfers';
 import './details.html';
 
-const { tokenSymbol } = Meteor.settings.public.Ethereum;
+const { tokenSymbol } = Meteor.settings.public.Scroll;
 
 TemplateController('CampaignDetails', {
   state: {

@@ -2,7 +2,7 @@
   {{#if isMine}}
     <div class="jumbotron">
       <h1 class="display-4">{{campaign.name}} {{#if isArchived}}<small>(closed)</small>{{/if}}</h1>
-      <p class="lead">Received: <strong>{{formatAmount balance}}</strong> {{Settings.Ethereum.tokenSymbol}}</p>
+      <p class="lead">Received: <strong>{{formatAmount balance}}</strong> {{Settings.Scroll.tokenSymbol}}</p>
       <hr class="my-4">
       <div class="mb-3">
         {{#collapse id='campaignViewKey' title='🔑 View-Only Key'}}
@@ -18,9 +18,9 @@
           <p>Once your Campaign is over, you may withdraw all funding received by closing it.</p>
           <form id="withdraw">
             <div class="form-group">
-              <label for="amount">Ethereum address:</label>
+              <label for="amount">Scroll address:</label>
               <input type="text" class="form-control" id="address" placeholder="0x......." required>
-              <small class="form-text text-muted">The funds will be securely transferred to the Ethereum address you
+              <small class="form-text text-muted">The funds will be securely transferred to the Scroll address you
                 specified.</small>
             </div>
             {{#if isLoading}}
@@ -42,7 +42,7 @@
           <div class="mb-3">
             {{#card}}
               <ul class="list-unstyled mb-0">
-                <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Ethereum.tokenSymbol}}</li>
+                <li><strong>Amount:</strong> {{formatAmount amount}} {{Settings.Scroll.tokenSymbol}}</li>
                 <li><strong>Created:</strong> {{createdAt.toLocaleString}}</li>
                 <li><strong>Status:</strong>
                   {{#if completedAt}}
