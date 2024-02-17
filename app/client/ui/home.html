@@ -1,18 +1,38 @@
 <template name="Home">
-  {{>pageHeader heading='Active Campaigns'}}
-  {{#each campaigns}}
-    <div class="mb-3">
-      {{#card title=name}}
-        <p>{{description}}</p>
-        <div class="d-flex justify-content-between">
-          <a href="/funding/{{_id}}" class="btn btn-primary">{{>i fa='heart'}} Fund Campaign</a>
-          {{#if isMine this}}
-            <a href="/campaign/{{_id}}" class="btn btn-warning">{{>i fa='cog'}} Manage Campaign</a>
-          {{/if}}
-        </div>
-      {{/card}}
+  <div class="py-5">
+    <h1 class="text-center text-bold py-5 my-5 display-4">
+      Platform for<br>
+      (1) anonymous<br>
+      (2) regulatory-friendly<br>
+      (3) cryptocurrency<br>
+      donations
+    </h1>
+  </div>
+  <h1 class="my-5">Possible use cases:</h1>
+  <div class="row my-5">
+    <div class="col-md">
+      <div class="mb-3 p-3">
+        <img src="/img/policitcal.jpg" alt="" class="img-responsive w-100">
+      </div>
+      <h3>Political matters</h3>
+      <p>Campaigns related to sensitive or controversial issues, such as political or religious matters, may require
+        a higher degree of privacy and confidentiality. </p>
     </div>
-  {{else}}
-    <p class="text-muted">No active Campaigns at the moment</p>
-  {{/each}}
+    <div class="col-md">
+      <div class="mb-3 p-3">
+        <img src="/img/victims.jpg" alt="" class="img-responsive w-100">
+      </div>
+      <h3>Victim support</h3>
+      <p>Campaigns aimed at supporting victims of crimes, lawsuits, or legal cases may involve sensitive information
+        and individuals who wish to remain anonymous for safety or privacy reasons.</p>
+    </div>
+    <div class="col-md">
+      <div class="mb-3 p-3">
+        <img src="/img/medical.jpg" alt="" class="img-responsive w-100">
+      </div>
+      <h3>Legal cases</h3>
+      <p> Some health-related campaigns or fundraisers might involve individuals seeking support for sensitive medical
+        conditions or treatments.</p>
+    </div>
+  </div>
 </template>

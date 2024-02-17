@@ -1,3 +1,18 @@
 <template name="CampaignListing">
-  {{>pageHeader heading='My Campaigns'}}
+  {{>pageHeader heading='Active Campaigns'}}
+  {{#each campaigns}}
+    <div class="mb-3">
+      {{#card title=name}}
+        <p>{{description}}</p>
+        <div class="d-flex justify-content-between">
+          <a href="/funding/{{_id}}" class="btn btn-primary">{{>i fa='heart'}} Fund Campaign</a>
+          {{#if isMine this}}
+            <a href="/campaign/{{_id}}" class="btn btn-warning">{{>i fa='cog'}} Manage Campaign</a>
+          {{/if}}
+        </div>
+      {{/card}}
+    </div>
+  {{else}}
+    <p class="text-muted">No active Campaigns at the moment</p>
+  {{/each}}
 </template>

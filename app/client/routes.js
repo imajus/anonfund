@@ -1,6 +1,7 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import './ui/layout';
 import './ui/home';
+import './ui/campaigns/listing';
 import './ui/campaigns/funding';
 import './ui/campaigns/details';
 import './ui/campaigns/create';
@@ -21,6 +22,12 @@ FlowRouter.route('/', {
 FlowRouter.route('/funding/:_id', {
   action() {
     this.render('Layout', { main: 'CampaignFunding' });
+  },
+});
+
+FlowRouter.route('/campaigns', {
+  action() {
+    this.render('Layout', { main: 'CampaignListing' });
   },
 });
 
