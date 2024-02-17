@@ -15,12 +15,12 @@ export async function maybeCompleteTransfer(transfer) {
         note.assetId === Meteor.settings.public.IronFish.assetId &&
         note.value === String(transfer.amount)
       ) {
-        const amount = transfer.amount - Meteor.settings.public.IronFish.fee;
         const campaign = Campaigns.findOne(transfer.campaignId);
         const { hash } = await IronFish.sendTransaction(
           transfer.account,
           campaign.address,
-          String(amount),
+          // Transaction fee is expected to be in account already
+          String(transfer.amount),
           // Pass through memo to keep track of the transfer
           note.memo,
         );
@@ -29,7 +29,6 @@ export async function maybeCompleteTransfer(transfer) {
           $set: {
             'hash': hash,
             'completedAt': new Date(),
-            'amount': amount,
           },
         });
         console.info('Completed transfer', transfer._id, transfer.amount);

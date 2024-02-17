@@ -5,6 +5,8 @@ import { Campaigns } from '/api/campaigns';
 import { IronFish } from '/api/ironfish/server';
 import { Transfers } from '../collection';
 
+const { fee } = Meteor.settings.public.IronFish;
+
 Meteor.methods({
   async 'Transfers.create'(campaignId, amount, origin) {
     check(this.userId, String);
@@ -21,6 +23,8 @@ Meteor.methods({
     const account = Random.id();
     const address = await IronFish.createAccount(account);
     console.debug('Created transfer account', account, address);
+    await IronFish.sendTransaction(null, address, fee);
+    console.debug('Deposit fee amount to transfer account', fee);
     const key = await IronFish.getViewKey(account);
     const transferId = await Transfers.insertAsync({
       'userId': this.userId,
