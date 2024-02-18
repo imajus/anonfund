@@ -1,4 +1,4 @@
-🥷 **AnonFund** is a platform for (1) anonymous (2) regulatory-compliant (3) cryptocurrency donations
+🥷 **AnonFund** is a platform for (1) anonymous (2) regulatory-friendly (3) cryptocurrency donations
 
 ## Overview
 
@@ -28,7 +28,7 @@ Both Donors and Campaign managers are able to export and share 🔑 View-Only Ke
 
 The Sepolia ⇒ IronFish bridge is utilized to support donating with Ethereum assets by seamlessly bridging them onto the IronFish blockchain for donors. Once the Campaign is over, the owner has the option to utilize the bridge in the opposite direction, effectively transferring all campaign funds back onto the Ethereum blockchain, if desired
 
-Sepolia Bridge address: `0x664b8b9892b7560b356ef0f8d44cbd1f6628e388`
+Sepolia Deposit address: `0x664b8b9892b7560b356ef0f8d44cbd1f6628e388`
 
 Sepolia WIRON address: `0x3dE166740d64d522AbFDa77D9d878dfedfDEEEDE`
 
