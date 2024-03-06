@@ -19,4 +19,9 @@ SyncedCron.add({
   },
 });
 
-SyncedCron.start();
+SyncedCron.config({
+  collectionName: 'cron',
+  collectionTTL: 60,
+});
+
+ SyncedCron.start();
